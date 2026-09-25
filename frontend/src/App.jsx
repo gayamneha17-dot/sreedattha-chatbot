@@ -4,36 +4,29 @@ import "./App.css";
 function App() {
   const [isChatOpen, setIsChatOpen] = useState(false);
   const [message, setMessage] = useState("");
-
   const [messages, setMessages] = useState([
     {
       sender: "bot",
       text: "👋 Hello! Welcome to Sree Dattha. How can I help you today?",
     },
   ]);
-
   const [isLoading, setIsLoading] = useState(false);
 
-  // Reference to the bottom of the conversation
   const messagesEndRef = useRef(null);
 
-  // Automatically scroll to the newest message
   useEffect(() => {
-    if (isChatOpen) {
-      messagesEndRef.current?.scrollIntoView({
-        behavior: "smooth",
-      });
-    }
-  }, [messages, isLoading, isChatOpen]);
+    messagesEndRef.current?.scrollIntoView({
+      behavior: "smooth",
+    });
+  }, [messages, isLoading]);
 
   const sendMessage = async () => {
-    if (!message.trim() || isLoading) {
+    const userMessage = message.trim();
+
+    if (!userMessage || isLoading) {
       return;
     }
 
-    const userMessage = message.trim();
-
-    // Add user's message to the conversation
     setMessages((previousMessages) => [
       ...previousMessages,
       {
@@ -42,35 +35,29 @@ function App() {
       },
     ]);
 
-    // Clear input
     setMessage("");
-
-    // Show loading state
     setIsLoading(true);
 
     try {
-      // Send question to FastAPI
-      const response = await fetch("http://127.0.0.1:8000/chat", {
-        method: "POST",
-
-        headers: {
-          "Content-Type": "application/json",
-        },
-
-        body: JSON.stringify({
-          message: userMessage,
-        }),
-      });
+      const response = await fetch(
+        "https://sreedattha-chatbot.onrender.com/chat",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            message: userMessage,
+          }),
+        }
+      );
 
       if (!response.ok) {
-        throw new Error(
-          `Server returned status ${response.status}`
-        );
+        throw new Error("Unable to get a response from the chatbot.");
       }
 
       const data = await response.json();
 
-      // Add chatbot answer
       setMessages((previousMessages) => [
         ...previousMessages,
         {
@@ -88,7 +75,7 @@ function App() {
         {
           sender: "bot",
           text:
-            "Sorry, I could not connect to the Sree Dattha assistant. Please try again.",
+            "Sorry, I couldn't connect to the Sree Dattha assistant. Please try again in a moment.",
         },
       ]);
     } finally {
@@ -97,124 +84,126 @@ function App() {
   };
 
   const handleKeyDown = (event) => {
-    if (event.key === "Enter" && !isLoading) {
+    if (event.key === "Enter" && !event.shiftKey) {
+      event.preventDefault();
       sendMessage();
     }
   };
 
   return (
     <div className="app">
-
-      {/* Header */}
-      <header className="header">
-        <h1>Sree Dattha</h1>
-        <p>Educational Institutions</p>
+      <header className="site-header">
+        <div className="header-content">
+          <h1>Sree Dattha Educational Institutions</h1>
+        </div>
       </header>
 
-      {/* Main Content */}
       <main className="main-content">
-        <h2>Welcome to Sree Dattha</h2>
+        <div className="welcome-section">
+          <h2>Welcome to Sree Dattha</h2>
 
-        <p>
-          Ask our virtual assistant about courses, admissions,
-          placements, facilities, and more.
-        </p>
+          <p>
+            Ask our virtual assistant about courses, admissions,
+            placements, facilities, and more.
+          </p>
+        </div>
       </main>
 
-      {/* Chat Window */}
+      {!isChatOpen && (
+        <button
+          className="chat-launcher"
+          onClick={() => setIsChatOpen(true)}
+          aria-label="Open chatbot"
+        >
+          <span className="chat-launcher-icon">💬</span>
+          <span>Chat with us</span>
+        </button>
+      )}
+
       {isChatOpen && (
         <div className="chat-window">
-
-          {/* Chat Header */}
           <div className="chat-header">
-            <div>
-              <strong>🎓 Sree Dattha Assistant</strong>
-              <span>Online</span>
+            <div className="chat-header-info">
+              <div className="chat-avatar">SD</div>
+
+              <div>
+                <h3>Sree Dattha Assistant</h3>
+
+                <div className="online-status">
+                  <span className="online-dot"></span>
+                  <span>Online</span>
+                </div>
+              </div>
             </div>
 
             <button
               className="close-button"
               onClick={() => setIsChatOpen(false)}
-              aria-label="Close chat"
+              aria-label="Close chatbot"
             >
               ×
             </button>
           </div>
 
-          {/* Messages */}
-          <div className="chat-messages">
-
+          <div className="messages-container">
             {messages.map((chatMessage, index) => (
               <div
                 key={index}
-                className={
+                className={`message-row ${
                   chatMessage.sender === "user"
-                    ? "user-message"
-                    : "bot-message"
-                }
-                style={{
-                  whiteSpace: "pre-wrap",
-                }}
+                    ? "user-row"
+                    : "bot-row"
+                }`}
               >
-                {chatMessage.text}
+                <div
+                  className={`message-bubble ${
+                    chatMessage.sender === "user"
+                      ? "user-message"
+                      : "bot-message"
+                  }`}
+                  style={{
+                    whiteSpace: "pre-wrap",
+                  }}
+                >
+                  {chatMessage.text}
+                </div>
               </div>
             ))}
 
-            {/* Loading Indicator */}
             {isLoading && (
-              <div
-                className="bot-message"
-                style={{
-                  whiteSpace: "pre-wrap",
-                }}
-              >
-                Thinking...
+              <div className="message-row bot-row">
+                <div className="message-bubble bot-message">
+                  Thinking...
+                </div>
               </div>
             )}
 
-            {/* Invisible element used for auto-scroll */}
             <div ref={messagesEndRef} />
-
           </div>
 
-          {/* Input Area */}
-          <div className="chat-input">
-
-            <input
-              type="text"
-              placeholder="Ask about courses, admissions, placements..."
+          <div className="chat-input-container">
+            <textarea
               value={message}
               onChange={(event) =>
                 setMessage(event.target.value)
               }
               onKeyDown={handleKeyDown}
+              placeholder="Ask about courses, admissions, placements..."
+              rows="1"
               disabled={isLoading}
             />
 
             <button
+              className="send-button"
               onClick={sendMessage}
-              disabled={
-                isLoading || !message.trim()
-              }
+              disabled={!message.trim() || isLoading}
               aria-label="Send message"
             >
-              ➤
+              {isLoading ? "..." : "Send"}
             </button>
-
           </div>
         </div>
       )}
-
-      {/* Floating Chat Button */}
-      {!isChatOpen && (
-        <button
-          className="chat-button"
-          onClick={() => setIsChatOpen(true)}
-        >
-          💬 Chat with us
-        </button>
-      )}
-
     </div>
   );
 }

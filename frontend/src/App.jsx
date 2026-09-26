@@ -14,14 +14,21 @@ function App() {
 
   const messagesEndRef = useRef(null);
 
+  const suggestedQuestions = [
+    "What courses are offered?",
+    "How can I get admission into Sree Dattha?",
+    "Tell me about placements",
+    "What facilities are available?",
+  ];
+
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({
       behavior: "smooth",
     });
   }, [messages, isLoading]);
 
-  const sendMessage = async () => {
-    const userMessage = message.trim();
+  const sendMessage = async (question = message) => {
+    const userMessage = question.trim();
 
     if (!userMessage || isLoading) {
       return;
@@ -53,7 +60,9 @@ function App() {
       );
 
       if (!response.ok) {
-        throw new Error("Unable to get a response from the chatbot.");
+        throw new Error(
+          "Unable to get a response from the chatbot."
+        );
       }
 
       const data = await response.json();
@@ -170,6 +179,22 @@ function App() {
               </div>
             ))}
 
+            {messages.length === 1 && !isLoading && (
+              <div className="suggested-questions">
+                {suggestedQuestions.map(
+                  (question, index) => (
+                    <button
+                      key={index}
+                      className="suggested-question"
+                      onClick={() => sendMessage(question)}
+                    >
+                      {question}
+                    </button>
+                  )
+                )}
+              </div>
+            )}
+
             {isLoading && (
               <div className="message-row bot-row">
                 <div className="message-bubble bot-message">
@@ -195,7 +220,7 @@ function App() {
 
             <button
               className="send-button"
-              onClick={sendMessage}
+              onClick={() => sendMessage()}
               disabled={!message.trim() || isLoading}
               aria-label="Send message"
             >

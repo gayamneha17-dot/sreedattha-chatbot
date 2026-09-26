@@ -522,3 +522,42 @@ input {
   opacity: 0.6;
   cursor: not-allowed;
 }
+/* --------------------------------------------------
+   Mobile Chat Improvements
+-------------------------------------------------- */
+
+@media (max-width: 600px) {
+  .chat-window {
+    width: calc(100vw - 20px);
+    max-width: none;
+    height: calc(100vh - 20px);
+    max-height: 600px;
+    right: 10px;
+    bottom: 10px;
+  }
+
+  .chat-input-container {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px;
+  }
+
+  .chat-input-container textarea {
+    flex: 1;
+    min-width: 0;
+    width: 100%;
+    font-size: 14px;
+    padding: 10px;
+  }
+
+  .send-button {
+    flex-shrink: 0;
+    padding: 10px 14px;
+    font-size: 14px;
+  }
+
+  .suggested-question {
+    max-width: 100%;
+  }
+}

@@ -1,6 +1,9 @@
 import { useEffect, useRef, useState } from "react";
 import "./App.css";
 
+import campusImage from "./assets/campus.jpg";
+import logoImage from "./assets/logo.jpg";
+
 function App() {
   const [isChatOpen, setIsChatOpen] = useState(false);
   const [message, setMessage] = useState("");
@@ -100,10 +103,26 @@ function App() {
   };
 
   return (
-    <div className="app">
+    <div
+      className="app"
+      style={{
+        backgroundImage: `url(${campusImage})`,
+      }}
+    >
+      <div className="background-overlay"></div>
+
       <header className="site-header">
         <div className="header-content">
-          <h1>Sree Dattha Educational Institutions</h1>
+          <img
+            src={logoImage}
+            alt="Sree Dattha Educational Institutions Logo"
+            className="college-logo"
+          />
+
+          <div className="college-title">
+            <h1>Sree Dattha Educational Institutions</h1>
+            <p>Applying Minds</p>
+          </div>
         </div>
       </header>
 

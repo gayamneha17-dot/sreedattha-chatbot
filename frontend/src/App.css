@@ -17,7 +17,7 @@ body,
 }
 
 body {
-  background: #f5f7fb;
+  margin: 0;
   color: #1f2937;
 }
 
@@ -28,19 +28,44 @@ textarea {
 
 
 /* ==================================================
-   APPLICATION
+   MAIN APPLICATION + CAMPUS BACKGROUND
 ================================================== */
 
 .app {
+  position: relative;
+
   width: 100%;
   min-height: 100vh;
 
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+
+  overflow: hidden;
+}
+
+
+/* Dark transparent layer over campus photo */
+
+.background-overlay {
+  position: absolute;
+
+  inset: 0;
+
+  min-height: 100%;
+
   background:
     linear-gradient(
-      135deg,
-      #f8fafc 0%,
-      #eef3f8 100%
+      180deg,
+      rgba(10, 35, 65, 0.42) 0%,
+      rgba(10, 35, 65, 0.30) 45%,
+      rgba(10, 35, 65, 0.48) 100%
     );
+
+  z-index: 0;
+
+  pointer-events: none;
 }
 
 
@@ -49,27 +74,73 @@ textarea {
 ================================================== */
 
 .site-header {
+  position: relative;
+
+  z-index: 2;
+
   width: 100%;
 
-  padding: 24px 7%;
+  padding: 14px 6%;
 
-  background: #ffffff;
+  background: rgba(255, 255, 255, 0.94);
 
-  border-bottom: 1px solid #e5e7eb;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.65);
 
   box-shadow:
-    0 2px 12px rgba(15, 23, 42, 0.05);
+    0 4px 18px rgba(15, 23, 42, 0.12);
+
+  backdrop-filter: blur(8px);
 }
 
 .header-content {
   width: 100%;
 
+  max-width: 1400px;
+
+  margin: 0 auto;
+
   display: flex;
 
   align-items: center;
+
+  gap: 18px;
 }
 
-.header-content h1 {
+
+/* ==================================================
+   COLLEGE LOGO
+================================================== */
+
+.college-logo {
+  width: 82px;
+
+  height: 82px;
+
+  flex-shrink: 0;
+
+  object-fit: contain;
+
+  border-radius: 10px;
+
+  background: #ffffff;
+
+  padding: 3px;
+}
+
+
+/* ==================================================
+   COLLEGE TITLE
+================================================== */
+
+.college-title {
+  display: flex;
+
+  flex-direction: column;
+
+  justify-content: center;
+}
+
+.college-title h1 {
   margin: 0;
 
   color: #183b67;
@@ -78,18 +149,34 @@ textarea {
 
   font-weight: 700;
 
-  line-height: 1.25;
+  line-height: 1.2;
 
   letter-spacing: -0.5px;
 }
 
+.college-title p {
+  margin: 5px 0 0;
+
+  color: #64748b;
+
+  font-size: 14px;
+
+  font-weight: 500;
+
+  letter-spacing: 0.8px;
+}
+
 
 /* ==================================================
-   MAIN PAGE
+   MAIN WELCOME SECTION
 ================================================== */
 
 .main-content {
-  min-height: calc(100vh - 90px);
+  position: relative;
+
+  z-index: 1;
+
+  min-height: calc(100vh - 112px);
 
   display: flex;
 
@@ -100,7 +187,7 @@ textarea {
   text-align: center;
 
   padding:
-    clamp(80px, 13vh, 125px)
+    clamp(90px, 14vh, 145px)
     24px
     150px;
 }
@@ -109,32 +196,51 @@ textarea {
   width: 100%;
 
   max-width: 800px;
+
+  padding: 30px 35px;
+
+  border-radius: 22px;
+
+  background: rgba(8, 30, 55, 0.42);
+
+  border: 1px solid rgba(255, 255, 255, 0.18);
+
+  box-shadow:
+    0 16px 45px rgba(0, 0, 0, 0.16);
+
+  backdrop-filter: blur(3px);
 }
 
 .welcome-section h2 {
-  margin: 0 0 20px;
+  margin: 0 0 16px;
 
-  color: #183b67;
+  color: #ffffff;
 
-  font-size: clamp(36px, 5vw, 56px);
+  font-size: clamp(38px, 5vw, 58px);
 
   font-weight: 700;
 
-  line-height: 1.15;
+  line-height: 1.12;
 
   letter-spacing: -1px;
+
+  text-shadow:
+    0 3px 12px rgba(0, 0, 0, 0.35);
 }
 
 .welcome-section p {
-  max-width: 720px;
+  max-width: 700px;
 
   margin: 0 auto;
 
-  color: #64748b;
+  color: #f1f5f9;
 
   font-size: clamp(16px, 2vw, 19px);
 
   line-height: 1.7;
+
+  text-shadow:
+    0 2px 7px rgba(0, 0, 0, 0.35);
 }
 
 
@@ -145,15 +251,17 @@ textarea {
 .chat-launcher {
   position: fixed;
 
+  z-index: 999;
+
   left: 50%;
 
-  bottom: 35px;
+  bottom: 34px;
 
   transform: translateX(-50%);
 
-  min-width: 210px;
+  min-width: 220px;
 
-  min-height: 60px;
+  min-height: 62px;
 
   display: flex;
 
@@ -163,9 +271,9 @@ textarea {
 
   gap: 10px;
 
-  padding: 16px 28px;
+  padding: 16px 30px;
 
-  border: none;
+  border: 1px solid rgba(255, 255, 255, 0.28);
 
   border-radius: 999px;
 
@@ -180,14 +288,12 @@ textarea {
   cursor: pointer;
 
   box-shadow:
-    0 12px 32px rgba(24, 59, 103, 0.32);
-
-  z-index: 999;
+    0 14px 36px rgba(0, 0, 0, 0.30);
 
   transition:
     background 0.2s ease,
-    box-shadow 0.2s ease,
-    transform 0.2s ease;
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
 }
 
 .chat-launcher:hover {
@@ -198,13 +304,11 @@ textarea {
     translateY(-2px);
 
   box-shadow:
-    0 16px 38px rgba(24, 59, 103, 0.38);
+    0 18px 42px rgba(0, 0, 0, 0.36);
 }
 
 .chat-launcher:active {
-  transform:
-    translateX(-50%)
-    translateY(0);
+  transform: translateX(-50%);
 }
 
 .chat-launcher-icon {
@@ -218,6 +322,8 @@ textarea {
 
 .chat-window {
   position: fixed;
+
+  z-index: 1000;
 
   left: 50%;
 
@@ -235,19 +341,17 @@ textarea {
 
   flex-direction: column;
 
+  overflow: hidden;
+
   background: #ffffff;
 
   border: 1px solid #e2e8f0;
 
   border-radius: 20px;
 
-  overflow: hidden;
-
   box-shadow:
-    0 24px 70px rgba(15, 23, 42, 0.22),
-    0 6px 20px rgba(15, 23, 42, 0.10);
-
-  z-index: 1000;
+    0 24px 70px rgba(15, 23, 42, 0.28),
+    0 6px 20px rgba(15, 23, 42, 0.14);
 }
 
 
@@ -276,8 +380,6 @@ textarea {
 .chat-header-info {
   display: flex;
 
-  flex-direction: row;
-
   align-items: center;
 
   gap: 12px;
@@ -302,11 +404,11 @@ textarea {
 
   color: #ffffff;
 
+  border: 1px solid rgba(255, 255, 255, 0.22);
+
   font-size: 14px;
 
   font-weight: 700;
-
-  border: 1px solid rgba(255, 255, 255, 0.22);
 }
 
 .chat-header-info h3 {
@@ -374,9 +476,6 @@ textarea {
   line-height: 1;
 
   cursor: pointer;
-
-  transition:
-    background 0.2s ease;
 }
 
 .close-button:hover {
@@ -385,9 +484,10 @@ textarea {
 
 
 /* ==================================================
-   MESSAGES CONTAINER
+   MESSAGES AREA
 
-   THIS IS THE IMPORTANT SCROLLING FIX
+   IMPORTANT:
+   KEEP THIS SCROLLING SECTION
 ================================================== */
 
 .messages-container {
@@ -426,17 +526,12 @@ textarea {
     #f1f5f9;
 }
 
-
-/* Chrome / Edge scrollbar */
-
 .messages-container::-webkit-scrollbar {
   width: 8px;
 }
 
 .messages-container::-webkit-scrollbar-track {
   background: #f1f5f9;
-
-  border-radius: 10px;
 }
 
 .messages-container::-webkit-scrollbar-thumb {
@@ -480,6 +575,8 @@ textarea {
 .message-bubble {
   max-width: 86%;
 
+  flex-shrink: 0;
+
   padding: 11px 14px;
 
   border-radius: 14px;
@@ -491,8 +588,6 @@ textarea {
   word-break: break-word;
 
   overflow-wrap: anywhere;
-
-  flex-shrink: 0;
 
   animation:
     messageAppear 0.2s ease;
@@ -519,21 +614,18 @@ textarea {
   border-bottom-right-radius: 5px;
 }
 
-
 @keyframes messageAppear {
 
   from {
     opacity: 0;
 
-    transform:
-      translateY(5px);
+    transform: translateY(5px);
   }
 
   to {
     opacity: 1;
 
-    transform:
-      translateY(0);
+    transform: translateY(0);
   }
 }
 
@@ -553,8 +645,7 @@ textarea {
 
   gap: 8px;
 
-  margin:
-    4px 0 12px;
+  margin: 4px 0 12px;
 
   padding: 0 4px;
 
@@ -595,19 +686,7 @@ textarea {
 
   color: #ffffff;
 
-  transform:
-    translateY(-1px);
-}
-
-.suggested-question:active {
-  transform:
-    translateY(0);
-}
-
-.suggested-question:disabled {
-  opacity: 0.6;
-
-  cursor: not-allowed;
+  transform: translateY(-1px);
 }
 
 
@@ -659,11 +738,6 @@ textarea {
   font-size: 14px;
 
   line-height: 20px;
-
-  transition:
-    background 0.2s ease,
-    border 0.2s ease,
-    box-shadow 0.2s ease;
 }
 
 .chat-input-container textarea::placeholder {
@@ -676,14 +750,7 @@ textarea {
   border-color: #183b67;
 
   box-shadow:
-    0 0 0 3px
-    rgba(24, 59, 103, 0.10);
-}
-
-.chat-input-container textarea:disabled {
-  opacity: 0.7;
-
-  cursor: not-allowed;
+    0 0 0 3px rgba(24, 59, 103, 0.10);
 }
 
 
@@ -719,17 +786,10 @@ textarea {
   font-weight: 600;
 
   cursor: pointer;
-
-  transition:
-    background 0.2s ease,
-    transform 0.15s ease;
 }
 
 .send-button:hover:not(:disabled) {
   background: #214d82;
-
-  transform:
-    translateY(-1px);
 }
 
 .send-button:disabled {
@@ -747,27 +807,27 @@ textarea {
 
   .site-header {
     padding:
-      22px
-      24px;
+      12px
+      22px;
   }
 
   .header-content {
     justify-content: center;
-
-    text-align: center;
   }
 
-  .header-content h1 {
-    max-width: 600px;
+  .college-logo {
+    width: 72px;
 
-    font-size: 27px;
+    height: 72px;
+  }
 
-    line-height: 1.3;
+  .college-title h1 {
+    font-size: 25px;
   }
 
   .main-content {
     padding:
-      85px
+      75px
       24px
       140px;
   }
@@ -784,71 +844,92 @@ textarea {
 
 @media (max-width: 600px) {
 
+  .app {
+    background-attachment: scroll;
+
+    background-position: center center;
+  }
+
+
+  /* Header */
+
   .site-header {
     padding:
-      22px
-      18px;
+      10px
+      14px;
   }
 
   .header-content {
     justify-content: center;
 
-    text-align: center;
+    gap: 10px;
   }
 
-  .header-content h1 {
-    width: 100%;
+  .college-logo {
+    width: 60px;
 
-    max-width: 340px;
+    height: 60px;
 
-    margin: 0 auto;
+    border-radius: 8px;
+  }
 
+  .college-title {
+    max-width: 270px;
+  }
+
+  .college-title h1 {
     font-size:
-      clamp(24px, 7vw, 29px);
+      clamp(18px, 5.2vw, 23px);
 
-    line-height: 1.3;
+    line-height: 1.2;
 
-    letter-spacing: -0.4px;
+    letter-spacing: -0.3px;
+  }
+
+  .college-title p {
+    margin-top: 3px;
+
+    font-size: 11px;
   }
 
 
-  /* Welcome area */
+  /* Welcome */
 
   .main-content {
     min-height:
-      calc(100vh - 85px);
-
-    align-items: flex-start;
+      calc(100vh - 82px);
 
     padding:
-      70px
-      22px
-      145px;
+      58px
+      18px
+      135px;
   }
 
   .welcome-section {
-    max-width: 360px;
+    max-width: 370px;
 
-    margin: 0 auto;
+    padding:
+      25px
+      20px;
+
+    border-radius: 18px;
   }
 
   .welcome-section h2 {
-    margin-bottom: 18px;
+    margin-bottom: 14px;
 
     font-size:
-      clamp(34px, 9.5vw, 42px);
+      clamp(32px, 9vw, 41px);
 
-    line-height: 1.15;
-
-    letter-spacing: -0.7px;
+    line-height: 1.14;
   }
 
   .welcome-section p {
-    max-width: 340px;
+    max-width: 330px;
 
-    font-size: 16px;
+    font-size: 15px;
 
-    line-height: 1.65;
+    line-height: 1.6;
   }
 
 
@@ -857,7 +938,7 @@ textarea {
   .chat-launcher {
     left: 50%;
 
-    bottom: 22px;
+    bottom: 20px;
 
     width:
       calc(100% - 40px);
@@ -867,7 +948,8 @@ textarea {
     min-height: 60px;
 
     padding:
-      16px 24px;
+      16px
+      24px;
 
     border-radius: 18px;
 
@@ -883,7 +965,7 @@ textarea {
   }
 
 
-  /* Full mobile chatbot */
+  /* Chat window */
 
   .chat-window {
     left: 50%;
@@ -909,7 +991,8 @@ textarea {
     min-height: 70px;
 
     padding:
-      13px 15px;
+      13px
+      15px;
   }
 
   .chat-avatar {
@@ -918,13 +1001,8 @@ textarea {
     height: 40px;
   }
 
-  .chat-header-info h3 {
-    font-size: 15px;
-  }
 
-
-  /* IMPORTANT:
-     only this middle area scrolls */
+  /* KEEP MOBILE SCROLLING */
 
   .messages-container {
     flex: 1 1 0;
@@ -944,16 +1022,10 @@ textarea {
 
   .message-bubble {
     max-width: 92%;
-
-    font-size: 14px;
-  }
-
-  .suggested-question {
-    max-width: 100%;
   }
 
 
-  /* Input remains at bottom */
+  /* Input */
 
   .chat-input-container {
     flex: 0 0 auto;
@@ -994,33 +1066,39 @@ textarea {
 
 @media (max-width: 380px) {
 
-  .site-header {
-    padding:
-      18px
-      14px;
+  .college-logo {
+    width: 52px;
+
+    height: 52px;
   }
 
-  .header-content h1 {
-    max-width: 310px;
+  .college-title {
+    max-width: 245px;
+  }
 
-    font-size: 23px;
-
-    line-height: 1.3;
+  .college-title h1 {
+    font-size: 18px;
   }
 
   .main-content {
     padding:
-      55px
-      18px
-      130px;
+      45px
+      14px
+      125px;
+  }
+
+  .welcome-section {
+    padding:
+      22px
+      16px;
   }
 
   .welcome-section h2 {
-    font-size: 33px;
+    font-size: 31px;
   }
 
   .welcome-section p {
-    font-size: 15px;
+    font-size: 14px;
   }
 
   .chat-launcher {
@@ -1061,16 +1139,5 @@ textarea {
     max-width: 94%;
 
     font-size: 13px;
-  }
-
-  .suggested-question {
-    font-size: 12px;
-  }
-
-  .send-button {
-    min-width: 55px;
-
-    padding:
-      0 10px;
   }
 }

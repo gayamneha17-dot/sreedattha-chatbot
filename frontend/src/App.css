@@ -33,7 +33,6 @@ textarea {
 
 .app {
   position: relative;
-
   width: 100%;
   min-height: 100vh;
 
@@ -45,14 +44,9 @@ textarea {
   overflow: hidden;
 }
 
-
-/* Dark transparent layer over campus photo */
-
 .background-overlay {
   position: absolute;
-
   inset: 0;
-
   min-height: 100%;
 
   background:
@@ -64,7 +58,6 @@ textarea {
     );
 
   z-index: 0;
-
   pointer-events: none;
 }
 
@@ -75,9 +68,7 @@ textarea {
 
 .site-header {
   position: relative;
-
   z-index: 2;
-
   width: 100%;
 
   padding: 14px 6%;
@@ -94,15 +85,11 @@ textarea {
 
 .header-content {
   width: 100%;
-
   max-width: 1400px;
-
   margin: 0 auto;
 
   display: flex;
-
   align-items: center;
-
   gap: 18px;
 }
 
@@ -113,7 +100,6 @@ textarea {
 
 .college-logo {
   width: 82px;
-
   height: 82px;
 
   flex-shrink: 0;
@@ -134,9 +120,7 @@ textarea {
 
 .college-title {
   display: flex;
-
   flex-direction: column;
-
   justify-content: center;
 }
 
@@ -485,7 +469,6 @@ textarea {
 
 /* ==================================================
    MESSAGES AREA
-   KEEP THIS - CHAT SCROLLING
 ================================================== */
 
 .messages-container {
@@ -836,7 +819,6 @@ textarea {
 
 /* ==================================================
    MOBILE
-   SHOW COMPLETE CAMPUS IMAGE
 ================================================== */
 
 @media (max-width: 600px) {
@@ -847,38 +829,36 @@ textarea {
     background-attachment: scroll;
 
     /*
-       Important mobile change:
-       contain shows the complete landscape campus image
-       instead of zooming/cropping it.
+       Keep the complete campus photo visible.
     */
     background-size: contain;
 
-    background-position: center center;
+    /*
+       Move campus picture slightly UP compared
+       with the previous version.
+    */
+    background-position: center 245px;
 
     background-repeat: no-repeat;
 
-    /*
-       This fills any space around the landscape image
-       on a portrait phone.
-    */
     background-color: #dbe7f1;
   }
 
-
-  /* Softer overlay because complete image is visible */
 
   .background-overlay {
     background:
       linear-gradient(
         180deg,
-        rgba(10, 35, 65, 0.24) 0%,
-        rgba(10, 35, 65, 0.18) 50%,
-        rgba(10, 35, 65, 0.30) 100%
+        rgba(10, 35, 65, 0.10) 0%,
+        rgba(10, 35, 65, 0.12) 50%,
+        rgba(10, 35, 65, 0.22) 100%
       );
   }
 
 
-  /* Header */
+  /* ==================================================
+     MOBILE HEADER
+  ================================================== */
 
   .site-header {
     padding:
@@ -920,65 +900,112 @@ textarea {
   }
 
 
-  /* Welcome */
+  /* ==================================================
+     MOBILE WELCOME
+  ================================================== */
 
   .main-content {
     min-height:
       calc(100vh - 82px);
 
+    display: flex;
+
+    justify-content: center;
+
+    align-items: flex-start;
+
     padding:
-      58px
+      28px
       18px
       135px;
   }
 
   .welcome-section {
-    max-width: 370px;
+    width: 100%;
+
+    max-width: 360px;
 
     padding:
-      25px
-      20px;
+      17px
+      18px;
 
-    border-radius: 18px;
+    border-radius: 16px;
 
     background:
-      rgba(8, 30, 55, 0.50);
+      rgba(24, 59, 103, 0.82);
+
+    border:
+      1px solid
+      rgba(255, 255, 255, 0.18);
+
+    box-shadow:
+      0 10px 25px
+      rgba(15, 23, 42, 0.16);
+
+    backdrop-filter: blur(3px);
   }
 
   .welcome-section h2 {
-    margin-bottom: 14px;
+    margin:
+      0
+      0
+      9px;
+
+    color: #ffffff;
 
     font-size:
-      clamp(32px, 9vw, 41px);
+      clamp(24px, 6.5vw, 29px);
 
-    line-height: 1.14;
+    font-weight: 700;
+
+    line-height: 1.15;
+
+    letter-spacing: -0.4px;
+
+    text-shadow:
+      0 2px 7px
+      rgba(0, 0, 0, 0.25);
   }
 
   .welcome-section p {
-    max-width: 330px;
+    max-width: 320px;
 
-    font-size: 15px;
+    margin: 0 auto;
 
-    line-height: 1.6;
+    color: #f1f5f9;
+
+    font-size: 13px;
+
+    line-height: 1.5;
+
+    text-shadow:
+      0 1px 5px
+      rgba(0, 0, 0, 0.22);
   }
 
 
-  /* Chat launcher */
+  /* ==================================================
+     MOBILE CHAT BUTTON
+  ================================================== */
 
   .chat-launcher {
     left: 50%;
 
-    bottom: 20px;
+    /*
+       Keep button lower on the screen so it does not
+       sit over the main college buildings.
+    */
+    bottom: 10px;
 
     width:
       calc(100% - 40px);
 
     max-width: 350px;
 
-    min-height: 60px;
+    min-height: 58px;
 
     padding:
-      16px
+      14px
       24px;
 
     border-radius: 18px;
@@ -995,7 +1022,9 @@ textarea {
   }
 
 
-  /* Chat window */
+  /* ==================================================
+     MOBILE CHAT WINDOW
+  ================================================== */
 
   .chat-window {
     left: 50%;
@@ -1032,7 +1061,9 @@ textarea {
   }
 
 
-  /* KEEP MOBILE CHAT SCROLLING */
+  /* ==================================================
+     KEEP MOBILE CHAT SCROLLING
+  ================================================== */
 
   .messages-container {
     flex: 1 1 0;
@@ -1055,7 +1086,9 @@ textarea {
   }
 
 
-  /* Chat input */
+  /* ==================================================
+     MOBILE CHAT INPUT
+  ================================================== */
 
   .chat-input-container {
     flex: 0 0 auto;
@@ -1112,32 +1145,38 @@ textarea {
 
   .main-content {
     padding:
-      45px
+      24px
       14px
       125px;
   }
 
   .welcome-section {
     padding:
-      22px
-      16px;
+      15px
+      14px;
+
+    max-width: 340px;
   }
 
   .welcome-section h2 {
-    font-size: 31px;
+    margin-bottom: 8px;
+
+    font-size: 24px;
   }
 
   .welcome-section p {
-    font-size: 14px;
+    font-size: 12px;
+
+    line-height: 1.45;
   }
 
   .chat-launcher {
     width:
       calc(100% - 28px);
 
-    bottom: 14px;
+    bottom: 8px;
 
-    min-height: 56px;
+    min-height: 54px;
 
     font-size: 16px;
   }

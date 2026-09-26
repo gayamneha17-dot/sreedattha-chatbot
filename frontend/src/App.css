@@ -485,9 +485,7 @@ textarea {
 
 /* ==================================================
    MESSAGES AREA
-
-   IMPORTANT:
-   KEEP THIS SCROLLING SECTION
+   KEEP THIS - CHAT SCROLLING
 ================================================== */
 
 .messages-container {
@@ -618,13 +616,11 @@ textarea {
 
   from {
     opacity: 0;
-
     transform: translateY(5px);
   }
 
   to {
     opacity: 1;
-
     transform: translateY(0);
   }
 }
@@ -840,14 +836,45 @@ textarea {
 
 /* ==================================================
    MOBILE
+   SHOW COMPLETE CAMPUS IMAGE
 ================================================== */
 
 @media (max-width: 600px) {
 
   .app {
+    min-height: 100vh;
+
     background-attachment: scroll;
 
+    /*
+       Important mobile change:
+       contain shows the complete landscape campus image
+       instead of zooming/cropping it.
+    */
+    background-size: contain;
+
     background-position: center center;
+
+    background-repeat: no-repeat;
+
+    /*
+       This fills any space around the landscape image
+       on a portrait phone.
+    */
+    background-color: #dbe7f1;
+  }
+
+
+  /* Softer overlay because complete image is visible */
+
+  .background-overlay {
+    background:
+      linear-gradient(
+        180deg,
+        rgba(10, 35, 65, 0.24) 0%,
+        rgba(10, 35, 65, 0.18) 50%,
+        rgba(10, 35, 65, 0.30) 100%
+      );
   }
 
 
@@ -913,6 +940,9 @@ textarea {
       20px;
 
     border-radius: 18px;
+
+    background:
+      rgba(8, 30, 55, 0.50);
   }
 
   .welcome-section h2 {
@@ -1002,7 +1032,7 @@ textarea {
   }
 
 
-  /* KEEP MOBILE SCROLLING */
+  /* KEEP MOBILE CHAT SCROLLING */
 
   .messages-container {
     flex: 1 1 0;
@@ -1025,7 +1055,7 @@ textarea {
   }
 
 
-  /* Input */
+  /* Chat input */
 
   .chat-input-container {
     flex: 0 0 auto;

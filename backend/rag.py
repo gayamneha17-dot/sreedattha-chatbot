@@ -7,10 +7,12 @@ from dotenv import load_dotenv
 from openai import OpenAI
 
 
-# Load environment variables from .env
+# --------------------------------------------------
+# Load environment variables
+# --------------------------------------------------
+
 load_dotenv()
 
-# Create OpenAI client
 client = OpenAI()
 
 
@@ -109,7 +111,6 @@ def keyword_score(question, chunk):
     score = 0.0
 
     # General keyword overlap
-
     chunk_words = tokenize(
         title + " " + text
     )
@@ -120,7 +121,10 @@ def keyword_score(question, chunk):
 
     score += len(common_words) * 0.005
 
-    # Course/program intent
+
+    # --------------------------------------------------
+    # Course / program intent
+    # --------------------------------------------------
 
     course_question_words = {
         "program",
@@ -164,6 +168,52 @@ def keyword_score(question, chunk):
 
         if "diploma" in text:
             score += 0.02
+
+
+    # --------------------------------------------------
+    # Admission intent
+    # --------------------------------------------------
+
+    admission_question_words = {
+        "admission",
+        "admissions",
+        "admit",
+        "apply",
+        "application",
+        "eligibility",
+        "eligible",
+        "entrance",
+    }
+
+    has_admission_intent = bool(
+        question_words & admission_question_words
+    )
+
+    if has_admission_intent:
+
+        if "admission criteria" in title:
+            score += 0.20
+
+        if "admission criteria" in text:
+            score += 0.10
+
+        if "admission-criteria" in url:
+            score += 0.25
+
+        if "entrance exams" in text:
+            score += 0.08
+
+        if "jee" in text:
+            score += 0.05
+
+        if "eamcet" in text:
+            score += 0.05
+
+        if "management quota" in text:
+            score += 0.05
+
+        if "convener" in text:
+            score += 0.04
 
     return score
 
@@ -277,6 +327,7 @@ Context:
 # --------------------------------------------------
 
 if __name__ == "__main__":
+
     question = input(
         "Ask a Sree Dattha question: "
     )
